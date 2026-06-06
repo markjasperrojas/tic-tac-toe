@@ -69,7 +69,39 @@ const GameController = (() => {
     }
   };
 
-  return { nextTurn, randomPicker, playerChoice, gridChecker };
+  const winnerChecker = (currentPlayer) => {
+    if (
+      (Gameboard.grid[0][0] === currentPlayer.sign &&
+        Gameboard.grid[0][1] === currentPlayer.sign &&
+        Gameboard.grid[0][2] === currentPlayer.sign) ||
+      (Gameboard.grid[1][0] === currentPlayer.sign &&
+        Gameboard.grid[1][1] === currentPlayer.sign &&
+        Gameboard.grid[1][2] === currentPlayer.sign) ||
+      (Gameboard.grid[2][0] === currentPlayer.sign &&
+        Gameboard.grid[2][1] === currentPlayer.sign &&
+        Gameboard.grid[2][2] === currentPlayer.sign) ||
+      (Gameboard.grid[0][0] === currentPlayer.sign &&
+        Gameboard.grid[1][0] === currentPlayer.sign &&
+        Gameboard.grid[2][0] === currentPlayer.sign) ||
+      (Gameboard.grid[0][1] === currentPlayer.sign &&
+        Gameboard.grid[1][1] === currentPlayer.sign &&
+        Gameboard.grid[2][1] === currentPlayer.sign) ||
+      (Gameboard.grid[0][2] === currentPlayer.sign &&
+        Gameboard.grid[1][2] === currentPlayer.sign &&
+        Gameboard.grid[2][2] === currentPlayer.sign) ||
+      (Gameboard.grid[0][0] === currentPlayer.sign &&
+        Gameboard.grid[1][1] === currentPlayer.sign &&
+        Gameboard.grid[2][2] === currentPlayer.sign) ||
+      (Gameboard.grid[0][2] === currentPlayer.sign &&
+        Gameboard.grid[1][1] === currentPlayer.sign &&
+        Gameboard.grid[2][0] === currentPlayer.sign)
+    ) {
+      console.log(`${currentPlayer.name} win!`);
+      isGridFull = true;
+    }
+  };
+
+  return { nextTurn, randomPicker, playerChoice, gridChecker, winnerChecker };
 })();
 
 let currentPlayer = PlayerOne;
@@ -79,6 +111,8 @@ do {
   GameController.playerChoice(currentPlayer);
   console.table(Gameboard.grid);
 
-  GameController.nextTurn();
+  GameController.winnerChecker(currentPlayer);
+
   GameController.gridChecker();
+  GameController.nextTurn();
 } while (!isGridFull);
