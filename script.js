@@ -22,43 +22,49 @@ const PlayerTwo = (() => {
   return { name, sign };
 })();
 
-function randomPicker() {
-  return Math.floor(Math.random() * 3);
-}
+const GameController = (() => {
+  const randomPicker = () => {
+    return Math.floor(Math.random() * 3);
+  };
 
-function playerChoice(currentPlayer) {
-  Gameboard.grid[randomPicker()][randomPicker()] = currentPlayer.sign;
-}
+  const playerChoice = (currentPlayer) => {
+    Gameboard.grid[GameController.randomPicker()][
+      GameController.randomPicker()
+    ] = currentPlayer.sign;
+  };
 
-function nextTurn() {
-  if (currentPlayer === PlayerOne) {
-    currentPlayer = PlayerTwo;
-  } else {
-    currentPlayer = PlayerOne;
-  }
-}
+  const nextTurn = () => {
+    if (currentPlayer === PlayerOne) {
+      currentPlayer = PlayerTwo;
+    } else {
+      currentPlayer = PlayerOne;
+    }
+  };
 
-function gridChecker() {
-  for (let i = 0; i < Gameboard.grid.length; i++) {
-    for (let j = 0; j < Gameboard.grid.length; j++) {
-      if (Gameboard.grid[i][j] === "") {
-        return;
+  const gridChecker = () => {
+    for (let i = 0; i < Gameboard.grid.length; i++) {
+      for (let j = 0; j < Gameboard.grid.length; j++) {
+        if (Gameboard.grid[i][j] === "") {
+          return;
+        }
+      }
+
+      if (i === 2) {
+        isGridFull = true;
       }
     }
+  };
 
-    if (i === 2) {
-      isGridFull = true;
-    }
-  }
-}
+  return { nextTurn, randomPicker, playerChoice, gridChecker };
+})();
 
 let currentPlayer = PlayerOne;
 let isGridFull = false;
 
 do {
-  playerChoice(currentPlayer);
+  GameController.playerChoice(currentPlayer);
   console.table(Gameboard.grid);
 
-  nextTurn();
-  gridChecker();
+  GameController.nextTurn();
+  GameController.gridChecker();
 } while (!isGridFull);
