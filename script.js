@@ -28,9 +28,21 @@ const GameController = (() => {
   };
 
   const playerChoice = (currentPlayer) => {
-    Gameboard.grid[GameController.randomPicker()][
-      GameController.randomPicker()
-    ] = currentPlayer.sign;
+    const row = GameController.randomPicker();
+    const column = GameController.randomPicker();
+
+    if (Gameboard.grid[row][column] === "") {
+      Gameboard.grid[row][column] = currentPlayer.sign;
+    } else {
+      for (let i = 0; i < Gameboard.grid.length; i++) {
+        for (let j = 0; j < Gameboard.grid.length; j++) {
+          if (Gameboard.grid[i][j] === "") {
+            Gameboard.grid[i][j] = currentPlayer.sign;
+            return;
+          }
+        }
+      }
+    }
   };
 
   const nextTurn = () => {
@@ -45,10 +57,12 @@ const GameController = (() => {
     for (let i = 0; i < Gameboard.grid.length; i++) {
       for (let j = 0; j < Gameboard.grid.length; j++) {
         if (Gameboard.grid[i][j] === "") {
+          // Return if all of cell are not occupied
           return;
         }
       }
 
+      // The loop will stop if all of cell are occupied
       if (i === 2) {
         isGridFull = true;
       }
