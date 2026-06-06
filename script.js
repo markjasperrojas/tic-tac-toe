@@ -53,22 +53,6 @@ const GameController = (() => {
     }
   };
 
-  const gridChecker = () => {
-    for (let i = 0; i < Gameboard.grid.length; i++) {
-      for (let j = 0; j < Gameboard.grid.length; j++) {
-        if (Gameboard.grid[i][j] === "") {
-          // Return if all of cell are not occupied
-          return;
-        }
-      }
-
-      // The loop will stop if all of cell are occupied
-      if (i === 2) {
-        isGridFull = true;
-      }
-    }
-  };
-
   const winnerChecker = (currentPlayer) => {
     if (
       (Gameboard.grid[0][0] === currentPlayer.sign &&
@@ -97,15 +81,32 @@ const GameController = (() => {
         Gameboard.grid[2][0] === currentPlayer.sign)
     ) {
       console.log(`${currentPlayer.name} win!`);
-      isGridFull = true;
+      stopTheGame = true;
     }
   };
 
-  return { nextTurn, randomPicker, playerChoice, gridChecker, winnerChecker };
+  const tieChecker = () => {
+    for (let i = 0; i < Gameboard.grid.length; i++) {
+      for (let j = 0; j < Gameboard.grid.length; j++) {
+        if (Gameboard.grid[i][j] === "") {
+          return;
+        }
+      }
+
+      if (i === 2 && stopTheGame === true) {
+        return;
+      } else if (i === 2) {
+        console.log("Tie!");
+        stopTheGame = true;
+      }
+    }
+  };
+
+  return { nextTurn, randomPicker, playerChoice, tieChecker, winnerChecker };
 })();
 
 let currentPlayer = PlayerOne;
-let isGridFull = false;
+let stopTheGame = false;
 
 do {
   GameController.playerChoice(currentPlayer);
@@ -113,6 +114,6 @@ do {
 
   GameController.winnerChecker(currentPlayer);
 
-  GameController.gridChecker();
+  GameController.tieChecker();
   GameController.nextTurn();
-} while (!isGridFull);
+} while (!stopTheGame);
