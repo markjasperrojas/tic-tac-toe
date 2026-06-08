@@ -105,6 +105,32 @@ const GameController = (() => {
   return { nextTurn, randomPicker, playerChoice, tieChecker, winnerChecker };
 })();
 
+const displayController = (() => {
+  const displayBoard = () => {
+    Gameboard.grid.forEach((rowItem, rowIndex) => {
+      const row = document.createElement("div");
+
+      row.classList.add("row");
+      row.dataset.row = rowIndex;
+
+      rowItem.forEach((colItem, colIndex) => {
+        const col = document.createElement("div");
+
+        col.textContent = colItem;
+        col.classList.add("col");
+        col.dataset.col = colIndex;
+
+        row.appendChild(col);
+      });
+
+      grid.appendChild(row);
+    });
+  };
+
+  return { displayBoard };
+})();
+
+const grid = document.querySelector(".grid");
 let currentPlayer = PlayerOne;
 let stopTheGame = false;
 
@@ -117,3 +143,5 @@ do {
   GameController.tieChecker();
   GameController.nextTurn();
 } while (!stopTheGame);
+
+displayController.displayBoard();
