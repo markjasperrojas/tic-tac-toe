@@ -11,20 +11,16 @@ const Gameboard = (() => {
 const PlayerOne = (() => {
   const sign = "O";
 
-  return { name, sign };
+  return { sign };
 })();
 
 const PlayerTwo = (() => {
   const sign = "X";
 
-  return { name, sign };
+  return { sign };
 })();
 
 const GameController = (() => {
-  const randomPicker = () => {
-    return Math.floor(Math.random() * 3);
-  };
-
   const playerChoice = (currentPlayer) => {
     return currentPlayer.sign;
   };
@@ -65,14 +61,13 @@ const GameController = (() => {
         Gameboard.grid[2][0] === currentPlayer.sign)
     ) {
       const colDivs = document.querySelectorAll(".col");
-      const result = document.querySelector(".result");
-
-      console.log(`${currentPlayer.sign} win!`);
-      result.textContent = `${currentPlayer.sign} win!`;
 
       colDivs.forEach((col) => {
         col.classList.add("col-events");
       });
+
+      result.textContent = `${currentPlayer.sign} win!`;
+      console.log(`${currentPlayer.sign} win!`);
     }
   };
 
@@ -84,16 +79,20 @@ const GameController = (() => {
         }
       }
 
-      if (i === 2 && stopTheGame === true) {
-        return;
-      } else if (i === 2) {
+      if (i === 2) {
+        const colDivs = document.querySelectorAll(".col");
+
+        colDivs.forEach((col) => {
+          col.classList.add("col-events");
+        });
+
+        result.textContent = "Tie!";
         console.log("Tie!");
-        stopTheGame = true;
       }
     }
   };
 
-  return { nextTurn, randomPicker, playerChoice, tieChecker, winnerChecker };
+  return { nextTurn, playerChoice, tieChecker, winnerChecker };
 })();
 
 const DisplayController = (() => {
@@ -122,6 +121,8 @@ const DisplayController = (() => {
 
             GameController.winnerChecker(currentPlayer);
 
+            GameController.tieChecker();
+
             GameController.nextTurn();
           }
         });
@@ -133,12 +134,11 @@ const DisplayController = (() => {
     });
   };
 
-  const displayResult = () => {};
-
   return { displayBoard };
 })();
 
 const grid = document.querySelector(".grid");
+const result = document.querySelector(".result");
 let currentPlayer = PlayerOne;
 
 DisplayController.displayBoard();
