@@ -35,8 +35,25 @@ header {
 .content {
   flex: 1;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 4rem;
+}
+
+#restart-btn {
+  padding: 1rem 2rem;
+  font-family: inherit;
+  color: var(--green);
+  background: var(--white);
+  border: none;
+  font-size: 1.6rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+}
+
+#restart-btn:hover {
+  cursor: pointer;
 }
 
 .grid {
@@ -61,18 +78,16 @@ header {
   font-size: 4rem;
 }
 
-.col-events {
-  pointer-events: none;
-}
-
 .col:hover {
   cursor: pointer;
 }
 
-.card {
-  width: 5rem;
-  height: 5rem;
-  background: blue;
+.col-events {
+  pointer-events: none;
+}
+
+.result {
+  font-size: 2rem;
 }
 
 /* === FOOTER === */
@@ -93,5 +108,3 @@ footer {
   gap: 1rem;
   padding: 0.5rem;
 }
-
-/* === UNIVERSAL === */

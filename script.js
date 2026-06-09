@@ -9,14 +9,12 @@ const Gameboard = (() => {
 })();
 
 const PlayerOne = (() => {
-  const name = "Player One";
   const sign = "O";
 
   return { name, sign };
 })();
 
 const PlayerTwo = (() => {
-  const name = "Player Two";
   const sign = "X";
 
   return { name, sign };
@@ -67,7 +65,11 @@ const GameController = (() => {
         Gameboard.grid[2][0] === currentPlayer.sign)
     ) {
       const colDivs = document.querySelectorAll(".col");
-      console.log(`${currentPlayer.name} win!`);
+      const result = document.querySelector(".result");
+
+      console.log(`${currentPlayer.sign} win!`);
+      result.textContent = `${currentPlayer.sign} win!`;
+
       colDivs.forEach((col) => {
         col.classList.add("col-events");
       });
@@ -130,6 +132,8 @@ const DisplayController = (() => {
       grid.appendChild(row);
     });
   };
+
+  const displayResult = () => {};
 
   return { displayBoard };
 })();
