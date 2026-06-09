@@ -28,21 +28,7 @@ const GameController = (() => {
   };
 
   const playerChoice = (currentPlayer) => {
-    const row = GameController.randomPicker();
-    const column = GameController.randomPicker();
-
-    if (Gameboard.grid[row][column] === "") {
-      Gameboard.grid[row][column] = currentPlayer.sign;
-    } else {
-      for (let i = 0; i < Gameboard.grid.length; i++) {
-        for (let j = 0; j < Gameboard.grid.length; j++) {
-          if (Gameboard.grid[i][j] === "") {
-            Gameboard.grid[i][j] = currentPlayer.sign;
-            return;
-          }
-        }
-      }
-    }
+    return currentPlayer.sign;
   };
 
   const nextTurn = () => {
@@ -80,8 +66,11 @@ const GameController = (() => {
         Gameboard.grid[1][1] === currentPlayer.sign &&
         Gameboard.grid[2][0] === currentPlayer.sign)
     ) {
+      const colDivs = document.querySelectorAll(".col");
       console.log(`${currentPlayer.name} win!`);
-      stopTheGame = true;
+      colDivs.forEach((col) => {
+        col.classList.add("col-events");
+      });
     }
   };
 
@@ -105,7 +94,7 @@ const GameController = (() => {
   return { nextTurn, randomPicker, playerChoice, tieChecker, winnerChecker };
 })();
 
-const displayController = (() => {
+const DisplayController = (() => {
   const displayBoard = () => {
     Gameboard.grid.forEach((rowItem, rowIndex) => {
       const row = document.createElement("div");
@@ -120,6 +109,21 @@ const displayController = (() => {
         col.classList.add("col");
         col.dataset.col = colIndex;
 
+        col.addEventListener("click", () => {
+          if (col.textContent === "") {
+            col.textContent = GameController.playerChoice(currentPlayer);
+
+            Gameboard.grid[rowIndex][colIndex] =
+              GameController.playerChoice(currentPlayer);
+
+            console.table(Gameboard.grid);
+
+            GameController.winnerChecker(currentPlayer);
+
+            GameController.nextTurn();
+          }
+        });
+
         row.appendChild(col);
       });
 
@@ -132,16 +136,5 @@ const displayController = (() => {
 
 const grid = document.querySelector(".grid");
 let currentPlayer = PlayerOne;
-let stopTheGame = false;
 
-do {
-  GameController.playerChoice(currentPlayer);
-  console.table(Gameboard.grid);
-
-  GameController.winnerChecker(currentPlayer);
-
-  GameController.tieChecker();
-  GameController.nextTurn();
-} while (!stopTheGame);
-
-displayController.displayBoard();
+DisplayController.displayBoard();
