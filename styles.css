@@ -110,6 +110,11 @@ footer {
   padding: 0.5rem;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 /* === UNIVERSAL === */
 
 button:hover,

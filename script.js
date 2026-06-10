@@ -68,7 +68,11 @@ const GameController = (() => {
 
       result.textContent = `${currentPlayer.sign} win!`;
       console.log(`${currentPlayer.sign} win!`);
+
+      return true;
     }
+
+    return false;
   };
 
   const tieChecker = () => {
@@ -124,6 +128,10 @@ const DisplayController = (() => {
             GameController.tieChecker();
 
             GameController.nextTurn();
+
+            if (!result.textContent.includes("win")) {
+              result.textContent = `${currentPlayer.sign} turn`;
+            }
           }
         });
 
@@ -141,4 +149,5 @@ const grid = document.querySelector(".grid");
 const result = document.querySelector(".result");
 let currentPlayer = PlayerOne;
 
+result.textContent = `${currentPlayer.sign} turn`;
 DisplayController.displayBoard();
