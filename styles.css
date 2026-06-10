@@ -42,7 +42,7 @@ header {
 }
 
 #restart-btn {
-  padding: 1rem 2rem;
+  padding: 0.6rem 1.5rem;
   font-family: inherit;
   color: var(--green);
   background: var(--white);
@@ -67,6 +67,7 @@ header {
 .row {
   display: flex;
   gap: 0.25rem;
+  background: var(--white);
 }
 
 .col {
@@ -87,7 +88,7 @@ header {
 }
 
 .result {
-  font-size: 2rem;
+  font-size: 4rem;
 }
 
 /* === FOOTER === */
@@ -107,4 +108,11 @@ footer {
   align-items: center;
   gap: 1rem;
   padding: 0.5rem;
+}
+
+/* === UNIVERSAL === */
+
+button:hover,
+.col:hover {
+  filter: brightness(0.9);
 }
