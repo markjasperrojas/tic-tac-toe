@@ -2,7 +2,9 @@
 
 Tic tac toe is a classic two-player game played on a 3x3 grid.
 
-In this project, I practice factory functions and module patterns. This project was part of [The Odin Project](https://www.theodinproject.com/) curriculum and it was build from scratch.
+🔗 **Live Demo:** https://markjasperrojas.github.io/tic-tac-toe/
+
+In this project, I practiced factory functions and the module pattern. This project was part of the [The Odin Project](https://www.theodinproject.com/) curriculum, and it was built from scratch.
 
 ### Image Credits
 
